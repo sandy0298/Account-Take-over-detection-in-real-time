@@ -1,0 +1,6 @@
+functions-framework==3.*
+google-cloud-pubsub
+google-cloud-tasks
+google-cloud-core
+twilio
+requests
