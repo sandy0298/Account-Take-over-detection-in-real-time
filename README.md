@@ -41,7 +41,8 @@ The architecture is designed for **banking and financial services** use cases wh
 * Automated ATO response workflows (OTP, IVR, account blocking)
 * Feedback loop for continuous model improvement
 * Built-in **data governance & data quality** controls
-* **Gemini-powered GenAI** for pattern discovery and natural language data access
+
+> **Important:** All events (both fraud and non-fraud) are stored centrally in **BigQuery**. These datasets form the foundation for analytics, model retraining, governance, data quality enforcement, and future GenAI capabilities.
 
 ---
 
@@ -141,26 +142,18 @@ This makes the model a **living, learning control** rather than a static rule en
 ### 1️⃣ User Activity Ingestion
 
 * Customer login and transaction events from **Internet Banking / Mobile Banking**
-* Events are streamed in **real time to Pub/Sub**
-
-**Component:**
-
-* `Customer Account Activities – Pub/Sub`
+* Events are captured in real time for downstream processing
 
 ---
 
 ### 2️⃣ Streaming Fraud Detection Pipeline
 
-* **Dataflow (Streaming)** reads events from Pub/Sub
+* **Dataflow (Streaming)** processes incoming events
 * Session and behavioral features are enriched
 * Data is:
 
-  * Stored in **Cloud Bigtable** (low-latency session storage)
+  * Persisted in **BigQuery** (fraud and non-fraud datasets)
   * Sent to **Vertex AI hosted LSTM model** for inference
-
-**Component:**
-
-* `Dataflow Streaming Pipeline`
 
 ---
 
@@ -183,12 +176,16 @@ This makes the model a **living, learning control** rather than a static rule en
 
 ---
 
-### 4️⃣ Suspicious Activity Publishing
+### 4️⃣ Fraud Classification & Storage
 
-* Predictions marked as suspicious are:
+* Model predictions are classified as **fraud** or **non-fraud**
+* All outcomes are stored in **BigQuery**
+* These datasets are later used for:
 
-  * Written to **BigQuery** for analytics
-  * Published to **Fraud Transaction Pub/Sub** for downstream action
+  * Model retraining
+  * Reporting & analytics
+  * Data governance enforcement
+  * Data quality validation
 
 ---
 
@@ -234,16 +231,18 @@ This makes the model a **living, learning control** rather than a static rule en
 
 ---
 
-## 🤖 Gemini (GenAI) Integration
+## 🤖 Gemini (GenAI) – Future Enhancement
 
-Gemini enhances the platform by:
+Gemini capabilities are planned as a **future enhancement** and will operate exclusively on **governed BigQuery datasets** (fraud and non-fraud).
 
-* Discovering **new fraud patterns** automatically
-* Assisting in **feature engineering** for model retraining
-* Enabling **"Talk to Database"** capabilities:
+Planned capabilities include:
 
-  * Natural language queries for business & risk teams
-  * No SQL expertise required
+* Automatic discovery of **new fraud patterns**
+* Assistance with **feature engineering** for model retraining
+* **"Talk to Database"** functionality:
+
+  * Natural language queries for risk, fraud, and audit teams
+  * No SQL knowledge required
 
 ---
 
@@ -299,19 +298,10 @@ Gemini enhances the platform by:
 
 ## 📌 Future Enhancements
 
+* Gemini-powered **Talk to Database** using governed BigQuery datasets
+* Automated **data quality validation** driven by fraud and non-fraud outcomes
+* Centralized **data governance** across all fraud datasets
 * Graph-based fraud detection
 * Adaptive risk scoring
 * Cross-channel fraud correlation
 * Multi-region active-active deployment
-
----
-
-## 📄 License
-
-This project is provided for **reference architecture and educational purposes**.
-
----
-
-## 🙌 Acknowledgements
-
-Built using **Google Cloud Platform**, **Vertex AI**, and **Gemini Generative AI** to demonstrate next-generation fraud detection systems.
