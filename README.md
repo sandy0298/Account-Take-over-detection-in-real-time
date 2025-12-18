@@ -133,7 +133,7 @@ This makes the model a **living, learning control** rather than a static rule en
 
 ## 🏗️ High-Level Architecture
 
-![ATO Architecture](ATO_detection_v1.jpg)
+![ATO Architecture](ATO_detection_linkedin.jpg)
 
 ---
 
@@ -170,10 +170,6 @@ This makes the model a **living, learning control** rather than a static rule en
   * Device / location anomalies
   * Session hijacking patterns
 
-**Component:**
-
-* `ATO_LSTM – Vertex AI`
-
 ---
 
 ### 4️⃣ Fraud Classification & Storage
@@ -204,6 +200,10 @@ This makes the model a **living, learning control** rather than a static rule en
 * ✅ Non-suspicious → stored for reporting
 * ❌ Confirmed fraud → immediate action
 
+
+
+![Email Trigger](email.png)
+
 ---
 
 ### 6️⃣ Incident Management & Enforcement
@@ -213,11 +213,6 @@ This makes the model a **living, learning control** rather than a static rule en
   * Logged in **ServiceNow**
   * User account blocked immediately
   * Fraud activity stored in BigQuery
-
-**Component:**
-
-* `ServiceNow Integration`
-
 ---
 
 ### 7️⃣ Analytics & Reporting
